@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<title>Admin</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-</head>
-
-<body>
-
 <h1>Admin Panel</h1>
+
+<button onclick="addModule()">Add Module</button>
 
 <table>
 
@@ -20,36 +8,25 @@
 
 <tr>
 
-<th>Project</th>
-
+<th>Module</th>
 <th>Owner</th>
-
-<th>Function</th>
-
-<th>Case Total</th>
-
-<th>Case Done</th>
-
+<th>Total</th>
+<th>Pass</th>
+<th>Fail</th>
 <th>Automation</th>
-
-<th>Save</th>
+<th>Bug</th>
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-<tbody id="adminTable"></tbody>
+<tbody id="adminBody"></tbody>
 
 </table>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-<script src="js/config.js"></script>
-
 <script src="js/supabase.js"></script>
 
 <script src="js/admin.js"></script>
-
-</body>
-
-</html>
