@@ -1,39 +1,29 @@
-async function load(){
+async function loadDashboard(){
 
-let {data}=await supabaseClient
-
-.from("projects")
-
+const {data}=await supabaseClient
+.from("qa_projects")
 .select("*")
 
-let html=""
+let totalCases=0
+let passed=0
+let automation=0
+let openBug=0
 
 data.forEach(p=>{
 
-html+=`
-
-<tr>
-
-<td>${p.name}</td>
-
-<td>${p.owner}</td>
-
-<td>${p.function_total}</td>
-
-<td>${p.case_done}/${p.case_total}</td>
-
-<td>${p.auto_case}</td>
-
-<td>${p.status}</td>
-
-</tr>
-
-`
+totalCases+=p.case_total
+passed+=p.case_passed
+automation+=p.automation_total
+openBug+=p.bug_open
 
 })
 
-document.getElementById("projectTable").innerHTML=html
+let passRate=Math.round(passed/totalCases*100)
+let autoRate=Math.round(automation/totalCases*100)
+
+document.getElementById("totalCases").innerText=totalCases
+document.getElementById("passRate").innerText=passRate+"%"
+document.getElementById("autoRate").innerText=autoRate+"%"
+document.getElementById("openBug").innerText=openBug
 
 }
-
-load()
