@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -8,44 +7,62 @@
 
 <link rel="stylesheet" href="css/style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<h1>Auto Team Hub</h1>
+<h1>QA Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total CASE</h3>
+<p id="caseTotal"></p>
+</div>
+
+<div class="card">
+<h3>Pass Rate</h3>
+<p id="passRate"></p>
+</div>
+
+<div class="card">
+<h3>Automation</h3>
+<p id="autoRate"></p>
+</div>
+
+<div class="card">
+<h3>Open Bugs</h3>
+<p id="openBug"></p>
+</div>
+
+</div>
 
 <table>
 
 <thead>
 
 <tr>
-
-<th>Project</th>
-
+<th>Module</th>
 <th>Owner</th>
-
-<th>Function</th>
-
-<th>Case</th>
-
+<th>CASE</th>
+<th>PASS</th>
+<th>FAIL</th>
 <th>Automation</th>
-
+<th>Bug</th>
 <th>Status</th>
-
 </tr>
 
 </thead>
 
-<tbody id="projectTable"></tbody>
+<tbody id="tableBody"></tbody>
 
 </table>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-<script src="js/config.js"></script>
-
 <script src="js/supabase.js"></script>
-
 <script src="js/dashboard.js"></script>
 
 </body>
