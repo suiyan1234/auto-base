@@ -1,42 +1,36 @@
-const session=localStorage.getItem("session")
+async function load(){
 
-if(!session){
-
-window.location="login.html"
-
-}
-
-async function loadAdmin(){
-
-let {data}=await supabaseClient
-
-.from("projects")
-
+const {data}=await supabaseClient
+.from("qa_modules")
 .select("*")
 
 let html=""
 
-data.forEach(p=>{
+data.forEach(m=>{
 
 html+=`
 
 <tr>
 
-<td>${p.name}</td>
+<td><input id="module_${m.id}" value="${m.module}"></td>
 
-<td>${p.owner}</td>
+<td><input id="owner_${m.id}" value="${m.owner}"></td>
 
-<td><input value="${p.function_total}" id="f_${p.id}"></td>
+<td><input id="total_${m.id}" value="${m.case_total}"></td>
 
-<td><input value="${p.case_total}" id="c_${p.id}"></td>
+<td><input id="pass_${m.id}" value="${m.case_pass}"></td>
 
-<td><input value="${p.case_done}" id="d_${p.id}"></td>
+<td><input id="fail_${m.id}" value="${m.case_fail}"></td>
 
-<td><input value="${p.auto_case}" id="a_${p.id}"></td>
+<td><input id="auto_${m.id}" value="${m.automation}"></td>
+
+<td><input id="bug_${m.id}" value="${m.bug_open}"></td>
 
 <td>
 
-<button onclick="save('${p.id}')">Save</button>
+<button onclick="save(${m.id})">Save</button>
+
+<button onclick="remove(${m.id})">Delete</button>
 
 </td>
 
@@ -46,32 +40,8 @@ html+=`
 
 })
 
-document.getElementById("adminTable").innerHTML=html
+document.getElementById("adminBody").innerHTML=html
 
 }
 
-async function save(id){
-
-await supabaseClient
-
-.from("projects")
-
-.update({
-
-function_total:document.getElementById("f_"+id).value,
-
-case_total:document.getElementById("c_"+id).value,
-
-case_done:document.getElementById("d_"+id).value,
-
-auto_case:document.getElementById("a_"+id).value
-
-})
-
-.eq("id",id)
-
-alert("Saved")
-
-}
-
-loadAdmin()
+load()
