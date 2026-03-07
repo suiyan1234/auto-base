@@ -1,29 +1,56 @@
-async function loadDashboard(){
+async function load(){
 
 const {data}=await supabaseClient
-.from("qa_projects")
+.from("qa_modules")
 .select("*")
 
-let totalCases=0
-let passed=0
-let automation=0
-let openBug=0
+let html=""
 
-data.forEach(p=>{
+let total=0
+let pass=0
+let auto=0
+let bug=0
 
-totalCases+=p.case_total
-passed+=p.case_passed
-automation+=p.automation_total
-openBug+=p.bug_open
+data.forEach(m=>{
+
+total+=m.case_total
+pass+=m.case_pass
+auto+=m.automation
+bug+=m.bug_open
+
+html+=`
+
+<tr>
+
+<td>${m.module}</td>
+<td>${m.owner}</td>
+<td>${m.case_total}</td>
+<td>${m.case_pass}</td>
+<td>${m.case_fail}</td>
+<td>${m.automation}</td>
+<td>${m.bug_open}</td>
+<td>${m.status}</td>
+
+</tr>
+
+`
 
 })
 
-let passRate=Math.round(passed/totalCases*100)
-let autoRate=Math.round(automation/totalCases*100)
+document.getElementById("tableBody").innerHTML=html
 
-document.getElementById("totalCases").innerText=totalCases
+document.getElementById("caseTotal").innerText=total
+
+let passRate=Math.round(pass/total*100)
+
 document.getElementById("passRate").innerText=passRate+"%"
+
+let autoRate=Math.round(auto/total*100)
+
 document.getElementById("autoRate").innerText=autoRate+"%"
-document.getElementById("openBug").innerText=openBug
+
+document.getElementById("openBug").innerText=bug
 
 }
+
+load()
