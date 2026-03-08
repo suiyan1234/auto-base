@@ -1,36 +1,28 @@
+import './supabase.js'
+
 async function load(){
 
-const {data}=await supabaseClient
-.from("qa_modules")
-.select("*")
+const {data}=await supabase
+.from('qa_modules')
+.select('*')
 
-let html=""
+const table=document.querySelector("#adminTable tbody")
+
+table.innerHTML=""
 
 data.forEach(m=>{
 
-html+=`
+table.innerHTML+=`
 
 <tr>
 
-<td><input id="module_${m.id}" value="${m.module}"></td>
-
-<td><input id="owner_${m.id}" value="${m.owner}"></td>
-
-<td><input id="total_${m.id}" value="${m.case_total}"></td>
-
-<td><input id="pass_${m.id}" value="${m.case_pass}"></td>
-
-<td><input id="fail_${m.id}" value="${m.case_fail}"></td>
-
-<td><input id="auto_${m.id}" value="${m.automation}"></td>
-
-<td><input id="bug_${m.id}" value="${m.bug_open}"></td>
+<td>${m.module}</td>
+<td>${m.owner}</td>
+<td>${m.case_total}</td>
 
 <td>
 
-<button onclick="save(${m.id})">Save</button>
-
-<button onclick="remove(${m.id})">Delete</button>
+<button onclick="del(${m.id})">Delete</button>
 
 </td>
 
@@ -40,7 +32,38 @@ html+=`
 
 })
 
-document.getElementById("adminBody").innerHTML=html
+}
+
+window.add=async function(){
+
+const module=document.getElementById("module").value
+const owner=document.getElementById("owner").value
+const case_total=document.getElementById("case_total").value
+
+await supabase
+.from('qa_modules')
+.insert([{module,owner,case_total}])
+
+load()
+
+}
+
+window.del=async function(id){
+
+await supabase
+.from('qa_modules')
+.delete()
+.eq('id',id)
+
+load()
+
+}
+
+window.logout=async function(){
+
+await supabase.auth.signOut()
+
+location.href="login.html"
 
 }
 
