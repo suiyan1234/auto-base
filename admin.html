@@ -1,8 +1,30 @@
-<h1>Admin Panel</h1>
-<input type="file" id="excelFile">
-<button onclick="addModule()">Add Module</button>
+<!DOCTYPE html>
 
-<table>
+<html>
+
+<head>
+
+<title>Admin Panel</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<h1>Admin Panel</h1>
+
+<button onclick="logout()">Logout</button>
+
+<h3>Add Module</h3>
+
+<input id="module">
+<input id="owner">
+<input id="case_total">
+
+<button onclick="add()">Add</button>
+
+<table id="adminTable">
 
 <thead>
 
@@ -11,28 +33,18 @@
 <th>Module</th>
 <th>Owner</th>
 <th>Total</th>
-<th>Pass</th>
-<th>Fail</th>
-<th>Automation</th>
-<th>Bug</th>
-<th>Action</th>
+<th>Delete</th>
 
 </tr>
 
 </thead>
 
-<tbody id="adminBody"></tbody>
+<tbody></tbody>
 
 </table>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script type="module" src="js/admin.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</body>
 
-<script src="js/supabase.js"></script>
-
-<script src="js/admin.js"></script>
-
-<script src="js/excel.js"></script>
-
-
+</html>
