@@ -1,24 +1,18 @@
-async function load(){
+import './supabase.js'
 
-const {data}=await supabaseClient
-.from("qa_modules")
-.select("*")
+async function loadData(){
 
-let html=""
+const {data,error}=await supabase
+.from('qa_modules')
+.select('*')
 
-let total=0
-let pass=0
-let auto=0
-let bug=0
+const table=document.querySelector("#moduleTable tbody")
+
+table.innerHTML=""
 
 data.forEach(m=>{
 
-total+=m.case_total
-pass+=m.case_pass
-auto+=m.automation
-bug+=m.bug_open
-
-html+=`
+let row=`
 
 <tr>
 
@@ -29,28 +23,52 @@ html+=`
 <td>${m.case_fail}</td>
 <td>${m.automation}</td>
 <td>${m.bug_open}</td>
-<td>${m.status}</td>
+<td>${m.sprint}</td>
 
 </tr>
-
 `
+
+table.innerHTML+=row
 
 })
 
-document.getElementById("tableBody").innerHTML=html
-
-document.getElementById("caseTotal").innerText=total
-
-let passRate=Math.round(pass/total*100)
-
-document.getElementById("passRate").innerText=passRate+"%"
-
-let autoRate=Math.round(auto/total*100)
-
-document.getElementById("autoRate").innerText=autoRate+"%"
-
-document.getElementById("openBug").innerText=bug
+drawCharts(data)
 
 }
 
-load()
+function drawCharts(data){
+
+const auto=data.map(d=>d.automation)
+const module=data.map(d=>d.module)
+
+new Chart(
+document.getElementById("automationChart"),
+{
+type:'bar',
+data:{
+labels:module,
+datasets:[{
+label:'Automation',
+data:auto
+}]
+}
+})
+
+const bug=data.map(d=>d.bug_open)
+
+new Chart(
+document.getElementById("bugChart"),
+{
+type:'line',
+data:{
+labels:module,
+datasets:[{
+label:'Open Bugs',
+data:bug
+}]
+}
+})
+
+}
+
+loadData()
