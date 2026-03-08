@@ -1,5 +1,32 @@
 import './supabase.js'
+async function checkAdmin(){
 
+const { data:{ user } } = await supabase.auth.getUser()
+
+if(!user){
+
+location.href="login.html"
+return
+
+}
+
+const { data } = await supabase
+.from('user_roles')
+.select('role')
+.eq('id',user.id)
+.single()
+
+if(!data || data.role!=='admin'){
+
+alert("No permission")
+
+location.href="index.html"
+
+}
+
+}
+
+await checkAdmin()
 async function load(){
 
 const {data}=await supabase
